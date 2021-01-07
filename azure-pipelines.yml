@@ -1,0 +1,215 @@
+variables:
+  appName: paperlessforms
+
+resources:
+- repo: self
+
+trigger:
+- master
+- Production
+
+
+stages:
+- stage: Developmentqa
+  displayName: 'Development and QA Env Build'
+  condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  jobs:
+  - job: 'DevelopmentQA_Build_Job'
+    pool:
+      vmImage: 'ubuntu-16.04'
+    displayName: 'DevelopmentQA_Build_Job'
+    condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    workspace:
+      clean: all
+    steps:
+    - checkout: self
+
+    - bash: |
+       sudo add-apt-repository ppa:rmescandon/yq
+       sudo apt update
+       sudo apt install yq -y
+       yq --version
+       tmp=$(mktemp)
+       jq '.dependencies["formio-plugin-offline"] = "git+https://2fd342e8cd148384b87e4e5d66b50b4fc5e2bed1:x-oauth-basic@github.com/formio/formio-plugin-offline.git#alexey"' package.json > "$tmp" && mv "$tmp" package.json
+       cat package.json
+
+
+    - task: Docker@1
+      displayName: 'Docker Login'
+      inputs:
+        azureSubscriptionEndpoint: 'dmp-arm'
+        azureContainerRegistry: digitalmarketingplatform.azurecr.io
+        command: login 
+
+    - task: Docker@1
+      displayName: 'Docker Build'
+      inputs:
+        azureSubscriptionEndpoint: 'dmp-arm'
+        azureContainerRegistry: digitalmarketingplatform.azurecr.io
+        imageName: '$(appName):$(Build.BuildId)'
+        includeLatestTag: true
+
+    - task: Docker@1
+      displayName: 'Docker Push Build Tag'
+      inputs:
+        azureSubscriptionEndpoint: 'dmp-arm'
+        azureContainerRegistry: digitalmarketingplatform.azurecr.io
+        command: 'Push an image'
+        imageName: '$(appName):$(Build.BuildId)' 
+
+    - task: Docker@1
+      displayName: 'Docker Push Latest Tag'
+      inputs:
+        azureSubscriptionEndpoint: 'dmp-arm'
+        azureContainerRegistry: digitalmarketingplatform.azurecr.io
+        command: 'Push an image'
+        imageName: '$(appName):latest'
+
+    - task: HelmInstaller@0
+      displayName: 'Install Helm 2.13.1'
+      inputs:
+        helmVersion: 2.13.1
+        checkLatestHelmVersion: false
+
+    - task: HelmDeploy@0
+      displayName: 'helm init'
+      inputs:
+        connectionType: Kubernetes Service Connection
+        kubernetesServiceEndpoint: aws-k8s-staging
+        kubernetesCluster: essak8sstaging
+        namespace: 'dev-system'
+        command: init
+        upgradeTiller: false
+        arguments: '--service-account tiller --client-only'       
+
+    - task: HelmDeploy@0
+      displayName: 'helm package'
+      inputs:
+        connectionType: Kubernetes Service Connection
+        kubernetesServiceEndpoint: aws-k8s-staging
+        kubernetesCluster: essak8sstaging
+        command: package
+        chartPath: charts/$(appName)
+        chartVersion: '$(build.buildId)'
+
+    - bash: az login --service-principal -u $(acrLogin) -p $(acrPassword) -t $(tenantId)
+      displayName: 'az login'
+      condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+
+    - bash: az acr helm push --name $(acrName) --password $(acrPassword) --resource-group DigitalExperiencePlatform --subscription 'SharePoint Online' --username $(acrLogin) $(build.artifactStagingDirectory)/$(appName)-$(build.buildId).tgz
+      displayName: 'az acr helm push'
+      condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+
+    - task: CopyFiles@2
+      inputs:
+        sourceFolder: '$(Build.SourcesDirectory)'
+        contents: '**/charts/**/?(values*.yaml)'
+        targetFolder: $(Build.ArtifactStagingDirectory)
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        artifactName: drop  
+
+- stage: PROD
+  displayName: 'PROD Env Build'
+  condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/Production'))
+  jobs:
+  - job: 'PROD_Build_Job'
+    pool:
+      vmImage: 'ubuntu-18.04'
+    displayName: 'PROD_Build_Job'
+    condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/Production'))
+    workspace:
+      clean: all
+    steps:
+    - checkout: self
+
+    - bash: |
+       sudo add-apt-repository ppa:rmescandon/yq
+       sudo apt update
+       sudo apt install yq -y
+       yq --version
+       tmp=$(mktemp)
+       jq '.dependencies["formio-plugin-offline"] = "git+https://2fd342e8cd148384b87e4e5d66b50b4fc5e2bed1:x-oauth-basic@github.com/formio/formio-plugin-offline.git#alexey"' package.json > "$tmp" && mv "$tmp" package.json
+       cat package.json
+
+
+    - task: Docker@1
+      displayName: 'Docker Login'
+      inputs:
+        azureSubscriptionEndpoint: 'dmp-arm'
+        azureContainerRegistry: digitalmarketingplatform.azurecr.io
+        command: login 
+
+    - task: Docker@1
+      displayName: 'Docker Build'
+      inputs:
+        azureSubscriptionEndpoint: 'dmp-arm'
+        azureContainerRegistry: digitalmarketingplatform.azurecr.io
+        imageName: '$(appName):$(Build.BuildId)'
+        includeLatestTag: true
+
+    - task: Docker@1
+      displayName: 'Docker Push Build Tag'
+      inputs:
+        azureSubscriptionEndpoint: 'dmp-arm'
+        azureContainerRegistry: digitalmarketingplatform.azurecr.io
+        command: 'Push an image'
+        imageName: '$(appName):$(Build.BuildId)' 
+
+    - task: Docker@1
+      displayName: 'Docker Push Latest Tag'
+      inputs:
+        azureSubscriptionEndpoint: 'dmp-arm'
+        azureContainerRegistry: digitalmarketingplatform.azurecr.io
+        command: 'Push an image'
+        imageName: '$(appName):latest'
+
+    - task: HelmInstaller@0
+      displayName: 'Install Helm 2.13.1'
+      inputs:
+        helmVersion: 2.13.1
+        checkLatestHelmVersion: false
+
+    - task: HelmDeploy@0
+      displayName: 'helm init'
+      inputs:
+        connectionType: Kubernetes Service Connection
+        kubernetesServiceEndpoint: essa-k8s-prod
+        kubernetesCluster: essa-prod-eks-cluster
+        namespace: 'prod-system'
+        command: init
+        upgradeTiller: false
+        arguments: '--service-account tiller --client-only'       
+
+    - task: HelmDeploy@0
+      displayName: 'helm package'
+      inputs:
+        connectionType: Kubernetes Service Connection
+        kubernetesServiceEndpoint: essa-k8s-prod
+        kubernetesCluster: essa-prod-eks-cluster
+        command: package
+        chartPath: charts/$(appName)
+        chartVersion: '$(build.buildId)'
+
+    - bash: az login --service-principal -u $(acrLogin) -p $(acrPassword) -t $(tenantId)
+      displayName: 'az login'
+      condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/Production'))
+
+    - bash: az acr helm push --name $(acrName) --password $(acrPassword) --resource-group DigitalExperiencePlatform --subscription 'SharePoint Online' --username $(acrLogin) $(build.artifactStagingDirectory)/$(appName)-$(build.buildId).tgz
+      displayName: 'az acr helm push'
+      condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/Production'))
+
+    - task: CopyFiles@2
+      inputs:
+        sourceFolder: '$(Build.SourcesDirectory)'
+        contents: '**/charts/**/?(values*.yaml)'
+        targetFolder: $(Build.ArtifactStagingDirectory)
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        artifactName: drop      
+
+

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Values.chart.Name }}"
+  namespace: "{{ .Values.nameSpace }}"
+  labels:
+    app: "{{ .Values.chart.Name }}"
+    chart: "{{ .Values.chart.Name }}"
+    version: "{{ .Chart.Version }}"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: "{{ .Values.chart.Name }}"
+      chart: "{{ .Values.chart.Name }}"
+      version: "{{ .Chart.Version }}"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Values.chart.Name }}"
+        chart: "{{ .Values.chart.Name }}"
+        version: "{{ .Chart.Version }}"
+    spec:
+      serviceAccount: "{{ .Values.deployment.serviceAccount }}"
+      containers:
+        - name: "{{ .Values.chart.Name }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.internalPort }}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}	
+{{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+{{- end }}
+      imagePullSecrets:
+        - name: {{ .Values.azureAuth.acrSecret }}
+      ports:
+            - containerPort: {{ .Values.service.internalPort }}
+            - protocol: TCP                                                   
+      restartPolicy: {{ .Values.deployment.restartPolicy }}
