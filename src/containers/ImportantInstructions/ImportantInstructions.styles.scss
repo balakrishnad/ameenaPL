@@ -1,0 +1,14 @@
+.important-instructions {
+  display: flex;
+  flex-direction: row;
+  padding-top: 60px;
+
+  &__text {
+
+  }
+
+  &__intro {
+    font-weight: 500;
+    color: $red;
+  }
+}

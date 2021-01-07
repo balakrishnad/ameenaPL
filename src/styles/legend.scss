@@ -1,0 +1,28 @@
+.legend {
+  width: 35%;
+  position: absolute;
+  right: 0;
+  top: 5px;
+}
+
+.legend-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  &__item{
+    display: flex;
+    list-style: none;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 1.4em;
+    flex: 1 0 21%;
+  }
+
+  &__marker {
+    width: 10px;
+    height: 10px;
+    margin-right: 0.7em;
+    background-color: #0080b9;
+  }
+}

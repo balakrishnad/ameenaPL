@@ -1,0 +1,48 @@
+
+.pep-gridview {position: relative;}
+.pep-c-loader {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: #fff;
+  opacity: 0.94;
+  z-index: 9999;
+  border: 1px solid #dee2e6;
+}
+
+.pep-c-iload {
+  border: 8px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 8px solid #3498db;
+  width: 60px;
+  height: 60px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  margin: 14% auto;
+}
+
+.pep-btn-h .pep-c-iload {
+  border: 7px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 7px solid #3498db;
+  width: 50px;
+  height: 50px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  margin: 0 auto;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.clearfix {float: none!important; clear: both!important;}
+@keyframes shine { 0% { background-position: -468px 0;} 100% { background-position: 468px 0;} }
+@keyframes shine2 { 0% { background-position: -2468px 0;} 100% { background-position: 2468px 0;} }

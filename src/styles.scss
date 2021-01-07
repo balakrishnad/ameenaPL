@@ -1,0 +1,541 @@
+/****Fixed applied for Task 322445*******/
+@import "./fonts/font.scss";
+/****End********/
+$white: #fff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #868e96;
+$gray-700: #495057;
+$gray-800: #373a3c;
+$gray-900: #212529;
+$black: #000;
+
+$blue: #127abf;
+$indigo: #6610f2;
+$purple: #613d7c;
+$pink: #e83e8c;
+$red: #ff0039;
+$orange: #f2661f;
+$yellow: #bed32b;
+$green: #449414;
+$teal: #20c997;
+$cyan: #9954bb;
+$lightblue: lighten($blue, 20%);
+
+$primary: $blue;
+$secondary: $orange;
+$success: $green;
+$info: $lightblue;
+$warning: $yellow;
+$danger: $red;
+$light: $gray-100;
+$dark: $gray-800;
+
+$warning-light-red: #ffdccd;
+
+@import "~bootswatch/dist/cosmo/_variables.scss";
+@import "~bootstrap/scss/bootstrap.scss";
+@import "~bootswatch/dist/cosmo/_bootswatch.scss";
+$fa-font-path: "../node_modules/font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
+@import "~formiojs/dist/formio.full.css";
+
+@import "containers/Header/Header.styles";
+@import "containers/BottomControlButtons/BottomControlButtons.styles";
+@import "containers/ImportantInstructions/ImportantInstructions.styles";
+@import "./styles/legend";
+@import "./styles/formlist";
+
+body {
+  /* Disables pull-to-refresh but allows overscroll glow effects. */
+  overscroll-behavior-y: contain;
+}
+
+.logo {
+  height: 1.9em;
+}
+
+.pageLoad {
+  pointer-events: none;
+  background: rgba(239, 240, 243, 0.952);
+  overflow: hidden;
+}
+
+.rtl {
+  direction: rtl;
+  text-align: right;
+  .legend {
+    right: 80%;
+  }
+  .ml-auto {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+  }
+  .mr-auto {
+    margin-left: auto !important;
+    margin-right: 0 !important;
+  }
+  ul {
+    padding: 0 !important;
+  }
+}
+
+.message-container {
+  padding: 0.75rem 1.25rem;
+  width: 100%;
+  margin-bottom: 1rem;
+  &__text {
+    margin: 0px;
+  }
+  &_warning {
+    color: #85001e;
+    border: 0 solid transparent;
+    background-color: #ffdccd;
+  }
+  &_info {
+    color: #234d0a;
+    background-color: #daead0;
+    border-color: #cbe1bd;
+  }
+  &_danger {
+    color: #85001e;
+    background-color: #ffccd7;
+    border-color: #ffb8c8;
+  }
+}
+
+.text-blue {
+  color: $blue;
+}
+
+.text-green {
+  color: $green;
+}
+
+.hero-image {
+  display: inline;
+  height: 2em;
+}
+// div.color-text input:first-of-type{
+//   color: $blue;
+//   background: yellow;
+//   background-color: #72A4D2;
+// }
+.wizard-page {
+  .row {
+    flex-wrap: nowrap;
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+
+.col-md-3,
+.col-sm-3,
+.col-md-4,
+.col-sm-4 {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.col-md-4,
+.col-sm-4 {
+  .formio-component-select {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+  }
+}
+.choices__input--cloned{
+  display:none !important;
+}
+.pep-header .col-form-label {
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+.col-form-label {
+  font-weight: 300;
+}
+
+.col-md-1 {
+  flex: 1 0 12%;
+  max-width: 13%;
+}
+
+.draft-row {
+  background-color: $warning-light-red;
+}
+
+.btn-light {
+  font-size: 1rem;
+  background-color: inherit;
+  border: none;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.grid-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  min-height: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.btn-active {
+  color: $white;
+  background-color: #0f649c;
+  border-color: #0e5c90;
+}
+
+.regular-submit-button {
+  opacity: 0;
+}
+
+.formio-select-autocomplete-input {
+  width: 0;
+}
+
+.navbar-expand-lg {
+  .container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+}
+
+.btn-add-new {
+  margin: 5px 0 5px 20%;
+  border-radius: 50%;
+  font-size: 1.2rem;
+}
+
+.form-control {
+  height: calc(1.5em + 1rem + 2px);
+  background-clip: initial;
+}
+
+.formio-form > .form-group,
+.wizard-page > .form-group {
+  padding: 0 5px;
+}
+
+.list-group-header {
+  background-color: #fafafa;
+}
+
+.form-panel {
+  border: 1px solid #838386;
+  background-color: #fff;
+  font-weight: 400;
+  color: #838386;
+  &:hover {
+    background-color: #fcfcff;
+    color: #838386;
+  }
+
+  &-highlighted {
+    background-color: #e8f8ff;
+    border: 1px solid #545457;
+    color: #0099ff;
+    &:hover {
+      background-color: #c5d1d6;
+      color: $white;
+    }
+  }
+}
+
+.fld-name {
+  padding-top: 10px;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/****Fixed applied for Task 322445****/
+@import "./scss/loader.scss";
+@import "./scss/uiskeleton.scss";
+div.dropdown[disabled] {
+  background-color: #e9ecef;
+  opacity: 1;
+}
+.pep-nav {
+  padding-bottom: 25px;
+  margin-bottom: 20px;
+}
+.pep-nav .nav-tabs .nav-item {
+  width: 50%;
+  text-align: center;
+}
+.pep-nav .nav-tabs {
+  border-bottom: 0;
+}
+.frm-name {
+  color: #377fd9; // only Color code is updated in exisiting class but not matching with style guide. Need clarification
+  font-size: 1.375rem;
+  margin-bottom: 10px;
+  margin: 15px 0px 20px;
+  padding-top: 35px;
+  border-top: 1px solid #e9ecef;
+}
+.form-panel-highlighted {
+  color: #377fd9 !important;
+} // Need fix in original Place. Need to talk to Lakshmy
+.form-panel-highlighted:hover {
+  background-color: #e8f8ff;
+}
+.pep-nav .nav-item .nav-link {
+  height: 60px;
+  font-size: 18px;
+}
+@media (max-width: 768px) {
+  .pep-nav .nav-item .nav-link {
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.5em;
+    height: 3.5em;
+    width: 100%;
+  }
+}
+.pep-nav .peptabs .nav-link {
+  border-color: #e9ecef #e9ecef #dee2e6;
+}
+.pep-nav .peptabs li {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+.pep-pad {
+  padding: 15px;
+}
+.pep-nopadrl {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+.pep-forms {
+  @extend .pep-padrl;
+  @extend .pep-border;
+}
+.pep-padrl {
+  padding-right: 15px !important;
+  padding-left: 15px !important;
+}
+.pep-padtrl {
+  padding-top: 15px !important;
+  padding-right: 15px !important;
+  padding-left: 15px !important;
+}
+.pep-lr-15 {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.pep-header {
+  margin-top: 20px;
+}
+
+.pep-width6 {
+  width: 50%;
+}
+.btn:disabled {
+  opacity: 0.3;
+}
+
+.dropdown,
+.input,
+.form-control {
+  height: 60px !important;
+  border: 1px solid #7a7b7b;
+}
+.pep-header .form-control {
+  border: 1px solid #ced4da;
+  padding: 0.75rem 0.75rem;
+}
+.pep-header .input-group-text {
+  border: 1px solid #ced4da;
+}
+.form-control {
+  height: 50px;
+}
+.dropdown {
+  padding: 1rem 0.75rem;
+}
+.pep-header .choices__item {
+  line-height: 2.2em;
+}
+
+.table thead th {
+  border-bottom: 1px solid #333;
+}
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #333;
+}
+.pep-noborder {
+}
+.pep-border {
+  border-bottom: 1px solid #edeeef;
+  border-left: 1px solid #edeeef;
+  border-right: 1px solid #edeeef;
+}
+.pep-gird-border {
+  @extend .pep-padtrl;
+  @extend .pep-border;
+}
+.pep-signature {
+  padding-left: 15px;
+  padding-right: 15px;
+  @extend .pep-border;
+}
+.btn-secondary {
+  background-color: red !important;
+  border-color: red !important;
+}
+.txt-fld {
+  padding-top: 10px;
+}
+.pep-signature .message-container {
+}
+.alert-danger,
+.message-container {
+  margin-bottom: 0rem;
+}
+.list-group-item {
+  padding: 0rem 0rem;
+  border: 0;
+  border-bottom: 2px solid rgb(173, 173, 173);
+}
+//.pep-gridcon .row div.col:first-child {background: rgb(246, 246, 246);}
+.pep-gridcon .row div.col {
+  padding: 1rem 1.25rem;
+}
+.pep-grid {
+  padding: 1rem 1.25rem;
+}
+.pep-grid .rdg {
+  font-size: 1.125rem !important;
+  height: auto !important;
+  --row-height: 54px !important;
+  --header-row-height: 60px !important;
+}
+.ag-header-cell {
+  font-size: 1.125rem !important;
+  height: 54px !important;
+}
+.ag-theme-alpine {
+  color: #373a3c !important;
+  font-family: "Roboto" !important;
+  font-size: 1.125rem !important;
+}
+
+.ag-theme-alpine .ag-header-row {
+  height: 60px !important;
+}
+.ag-theme-alpine .ag-row-odd {
+  background-color: white !important;
+}
+.ag-theme-alpine .ag-row {
+  font-size: 1.125rem !important;
+  height: 54px !important;
+  border-bottom: 2px solid #adadad !important;
+  font-family: "Roboto" !important;
+}
+.ag-ltr .ag-header-cell-resize {
+  right: !important;
+}
+.pep-grid .rdg-cell {
+  border-right: 0px solid #adadad !important;
+  border-bottom: 2px solid #adadad !important;
+}
+.pep-grid .rdg-selected {
+  border: none !important;
+}
+.pep-sig-form {
+  margin-top: 15px;
+}
+.pep-plusbtn {
+  margin: 15px;
+}
+.pep-edit {
+  @extend .pep-padtrl;
+  @extend .pep-border;
+}
+.pep-edit .formio-component-submit{
+  display:none;
+}
+.pep-forms .formio-component-submit{
+  display:none;
+}
+.pep-legend .legend-list__marker {
+  width: 20px;
+  height: 20px;
+}
+.input-group-text {
+  padding: 0.5rem 1rem;
+  border: 1px solid #7a7b7b;
+}
+.pep-plusbtn a:hover,
+.pep-btn-h:focus,
+.pep-btn-h:hover,
+.pep-btn:focus,
+.pep-btn:hover {
+  box-shadow: 0 0 0 0.2rem rgba(18, 122, 191, 0.25);
+}
+.btn-delete:hover {
+  box-shadow: 0 0 0 0.2rem rgba(255, 38, 87, 0.5);
+}
+.btn-delete {
+  height: 60px;
+  line-height: 2.3 !important;
+}
+.form-ref {
+  padding: 0.5em;
+  text-align: center;
+  font-size: 1.5em;
+}
+.form-dec {
+  padding: 0.5em;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5em;
+  height: 3.5em;
+  width: 100%;
+}
+.pep-grid {
+  padding-left: 6px;
+  padding-right: 6px;
+}
+.pep-grid a {
+  outline: 0;
+  border: 0;
+  text-decoration: none;
+}
+.pep-alert {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.cursor-disable {
+  cursor: not-allowed;
+}
+.pep-norecords {
+  padding: 0.75rem 1.25rem;
+  background-color: #daead0;
+  border-color: #cbe1bd;
+  width: 100%;
+}
+.formio-choices[data-type=select-multiple] .form-control {
+ // height: auto;
+  resize: both;
+  overflow: auto;
+}
+
+/*******End Task 322445 *********/

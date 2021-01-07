@@ -1,0 +1,95 @@
+.list-title {
+  font-weight: 400;
+  color: #45a7c8;
+}
+
+.formio-form {
+  .row {
+    flex-wrap: nowrap;
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+@media (max-width: 768px){
+  .col-md-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+}
+
+
+@media (max-width: 711px) {
+  .formio-form {
+    .row {
+      flex-wrap: wrap;
+    }
+  }
+}
+@media (max-width: 768px) {
+ 
+  .wizard-page {
+    .row {
+      flex-wrap: wrap !important;
+    }
+  }
+}
+.col-md-2 {
+  word-break: break-word;
+  text-align: justify;
+}
+.col-md-3, .col-md-4, .col-sm-4 {
+  padding: 0;
+ 
+}
+
+.form-row {
+  display: flex;
+  flex-flow: row;
+  overflow-x: auto;
+
+  a {
+    text-decoration: none;
+  }
+
+  &_block {
+    display: block;  background-color: #45a7c8;
+    height: 8em;border-radius: 4%; display: block; align-items: center; justify-content: center;
+    color: #fff;  cursor: pointer;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    &__new {
+      background-color: #45a7c8;
+    }
+
+    &__user-approved {
+      background-color: #e6af2e;
+    }
+
+    &__approved {
+      background-color: #56bd66;
+    }
+
+    &__in-progress {
+      background-color: #963694;
+    }
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
+
+.list-group {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+  overflow-y: scroll;
+  margin-bottom: 0;
+  height:400px !important;
+
+  .row {
+    flex-wrap: nowrap;
+    margin-right: 0;
+    margin-left: 0;
+  }
+}

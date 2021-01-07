@@ -1,0 +1,50 @@
+.navbar {
+  z-index: 200;
+}
+
+.navbar-expand-lg {
+  background-color: #0080b9;
+}
+
+.navbar-expand-lg .navbar-nav .nav-link {
+  padding-right: 1.5rem;
+  cursor: pointer;
+  color: $white;
+
+  &:hover {
+    color: #dbd9ff;
+  }
+}
+
+.navbar .form-control {
+  padding: .75rem 1rem;
+  border-width: 0;
+  border-radius: 0;
+}
+
+.form-control-dark {
+  color: $white;
+  background-color: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+.profile {
+  color: $white;
+  display: flex;
+  align-items: center;
+
+  &_name {
+    display: flex;
+    padding-right: 10px;
+  }
+
+  &_icon.fa {
+    font-size: 1.4rem;
+    padding: 0 10px;
+  }
+}

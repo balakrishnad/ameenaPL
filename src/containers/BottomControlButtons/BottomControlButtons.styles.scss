@@ -1,0 +1,53 @@
+.bottom-control-buttons {
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  justify-content: space-around;
+  margin: 30px 0px;
+
+  .btn {
+    border-radius: 2px;
+    font-size: 0.9em;
+    line-height: 2.1;
+    margin-left: 10px;
+    width: 250px;
+  }
+
+  .pep-btn {
+    color: #0099FE;
+    border-color: #0099FE;
+    height: 60px;
+    line-height: 2.3;
+  }
+
+  .pep-btn-h{
+    color: #fff;
+    background-color: #0099FE;
+    border-color: #0099FE;
+    height: 60px;
+    line-height: 2.1;
+  }
+
+  .btn-delete {
+    margin-right: 50%;
+    margin-left: 0;
+  }
+  @media (max-width: 768px) {
+
+    .pep-btn-h{
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.5em;
+      height: 3.6em;
+      width: 100%;
+    }
+    .btn-delete {
+      margin-right: 0px !important;
+    }
+
+  }
+
+
+
+}
